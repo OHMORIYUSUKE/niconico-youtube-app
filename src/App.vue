@@ -6,7 +6,7 @@
       color="white"
       scroll-target="#scrolling-techniques-7"
     >
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <HelloWorld></HelloWorld>
 
       <v-toolbar-title
         ><v-icon large="true" color="rgb(255, 19, 19)">mdi-youtube</v-icon>
@@ -34,19 +34,30 @@
     <div class="maincontent">
       <v-container>
         <v-row no-gutters>
-          <v-col v-for="article in articles" :key="article.id.videoId" sm="4">
-            <div class="card" elevation="1">
-              <iframe
-                width="100%"
-                height="215"
-                :src="'https://www.youtube.com/embed/' + article.id.videoId"
-                title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-              ></iframe>
+          <div v-if="articles == false">
+            <h3>取得できませんでした</h3>
+          </div>
+          <div v-else>
+            <div>
+              <v-col
+                v-for="article in articles"
+                :key="article.id.videoId"
+                sm="4"
+              >
+                <div class="card" elevation="1">
+                  <iframe
+                    width="100%"
+                    height="215"
+                    :src="'https://www.youtube.com/embed/' + article.id.videoId"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+              </v-col>
             </div>
-          </v-col>
+          </div>
         </v-row>
       </v-container>
     </div>
@@ -54,6 +65,7 @@
 </template>
 
 <script>
+import HelloWorld from "./components/HelloWorld.vue";
 import axios from "axios";
 import Vue from "vue";
 
@@ -70,7 +82,11 @@ export default {
   name: "Home",
   data: () => ({
     articles: [],
+    error: String,
   }),
+  components: {
+    HelloWorld,
+  },
   async mounted() {
     // 記事を取得する
     console.log("mounted()" + data.a);
@@ -82,7 +98,8 @@ export default {
           process.env.VUE_APP_API_KEY //直す
       )
       .catch((error) => {
-        window.alert("取得に失敗しました。\n" + error);
+        //window.alert("取得に失敗しました。\n" + error);
+        console.log(error);
       });
     this.articles = response.data.items;
     console.log(response.data.items);

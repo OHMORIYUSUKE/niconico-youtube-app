@@ -1,88 +1,38 @@
 <template>
-  <v-container>
-    <v-row no-gutters>
-      <v-col v-for="n in 12" :key="n" sm="4">
-        <div class="card" elevation="1">
-          <iframe
-            width="100%"
-            height="215"
-            src="https://www.youtube.com/embed/vE4L1IWLeag"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
-        </div>
-      </v-col>
-    </v-row>
-  </v-container>
+  <div class="text-center">
+    <v-dialog v-model="dialog" width="500">
+      <template v-slot:activator="{ on, attrs }">
+        <v-app-bar-nav-icon v-bind="attrs" v-on="on"></v-app-bar-nav-icon>
+      </template>
+
+      <v-card>
+        <v-card-title class="text-h5 grey lighten-2"> MyTube </v-card-title>
+
+        <v-card-text>
+          <p>YouTubeもどきです。</p>
+          <p>APIのコール数が上限に達すると利用できなくなります。</p>
+          <a href="https://twitter.com/uutan1108">作った人</a>
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" text @click="dialog = false"> 閉じる </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
 
 <script>
 export default {
-  name: "HelloWorld",
-
-  data: () => ({
-    ecosystem: [
-      {
-        text: "vuetify-loader",
-        href: "https://github.com/vuetifyjs/vuetify-loader",
-      },
-      {
-        text: "github",
-        href: "https://github.com/vuetifyjs/vuetify",
-      },
-      {
-        text: "awesome-vuetify",
-        href: "https://github.com/vuetifyjs/awesome-vuetify",
-      },
-    ],
-    importantLinks: [
-      {
-        text: "Documentation",
-        href: "https://vuetifyjs.com",
-      },
-      {
-        text: "Chat",
-        href: "https://community.vuetifyjs.com",
-      },
-      {
-        text: "Made with Vuetify",
-        href: "https://madewithvuejs.com/vuetify",
-      },
-      {
-        text: "Twitter",
-        href: "https://twitter.com/vuetifyjs",
-      },
-      {
-        text: "Articles",
-        href: "https://medium.com/vuetify",
-      },
-    ],
-    whatsNext: [
-      {
-        text: "Explore components",
-        href: "https://vuetifyjs.com/components/api-explorer",
-      },
-      {
-        text: "Select a layout",
-        href: "https://vuetifyjs.com/getting-started/pre-made-layouts",
-      },
-      {
-        text: "Frequently Asked Questions",
-        href:
-          "https://vuetifyjs.com/getting-started/frequently-asked-questions",
-      },
-    ],
-  }),
+  data() {
+    return {
+      dialog: false,
+    };
+  },
 };
 </script>
 
-<style scoped>
-.leftcontent {
-  margin-right: 15px;
-}
-.card {
-  margin: 4px;
-}
-</style>
+<style scoped></style>
