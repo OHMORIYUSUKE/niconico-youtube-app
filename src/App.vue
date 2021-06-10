@@ -33,31 +33,36 @@
 
     <div class="maincontent">
       <v-container>
-        <v-row no-gutters>
-          <div v-if="articles == false">
-            <h3>取得できませんでした</h3>
-          </div>
-          <div v-else>
-            <div>
-              <v-col
-                v-for="article in articles"
-                :key="article.id.videoId"
-                sm="4"
-              >
-                <div class="card" elevation="1">
-                  <iframe
-                    width="100%"
-                    height="215"
-                    :src="'https://www.youtube.com/embed/' + article.id.videoId"
-                    title="YouTube video player"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                  ></iframe>
-                </div>
-              </v-col>
+        <v-row v-if="articles == false">
+          <v-col sm="4">
+            <h3 class="errormsg">
+              取得できませんでした。<br /><br />僕の動画でも見ていってね。<br />
+            </h3>
+            <iframe
+              width="560"
+              height="315"
+              src="https://www.youtube.com/embed/UdRkqjRtTc0"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </v-col>
+        </v-row>
+        <v-row no-gutters v-else>
+          <v-col v-for="article in articles" :key="article.id.videoId" sm="4">
+            <div class="card" elevation="1">
+              <iframe
+                width="100%"
+                height="215"
+                :src="'https://www.youtube.com/embed/' + article.id.videoId"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
             </div>
-          </div>
+          </v-col>
         </v-row>
       </v-container>
     </div>
@@ -132,5 +137,8 @@ export default {
 }
 .card {
   margin: 4px;
+}
+.errormsg {
+  margin-right: 30px;
 }
 </style>
