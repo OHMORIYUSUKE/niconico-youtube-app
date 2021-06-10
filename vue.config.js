@@ -1,5 +1,11 @@
 module.exports = {
-  transpileDependencies: [
-    'vuetify'
-  ]
-}
+  transpileDependencies: ["vuetify"],
+};
+module.exports = {
+  pages: {
+    index: {
+      entry: "src/main.js", // 必須パラメータ
+      title: "MyTube",
+    },
+  },
+};
