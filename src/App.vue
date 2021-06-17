@@ -99,7 +99,7 @@ export default {
       .get(
         "https://www.googleapis.com/youtube/v3/search?type=video&part=snippet&q=" +
           data.a +
-          "&maxResults=15&key=" +
+          "&maxResults=21&key=" +
           process.env.VUE_APP_API_KEY //直す
       )
       .catch((error) => {
@@ -110,14 +110,14 @@ export default {
     console.log(response.data.items);
   },
   methods: {
-    search_video: async function () {
+    search_video: async function() {
       const ta3 = document.getElementById("searchTextId").value;
       vm.a = ta3;
       console.log(vm.a);
       const response = await axios.get(
         "https://www.googleapis.com/youtube/v3/search?type=video&part=snippet&q=" +
           data.a +
-          "&maxResults=15&key=" +
+          "&maxResults=21&key=" +
           process.env.VUE_APP_API_KEY //直す
       );
       console.log(response.data);
