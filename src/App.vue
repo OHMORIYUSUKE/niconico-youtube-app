@@ -61,6 +61,7 @@
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen
               ></iframe>
+              <p>{{article.snippet.title}}</p>
             </div>
           </v-col>
         </v-row>
@@ -99,15 +100,15 @@ export default {
       .get(
         "https://www.googleapis.com/youtube/v3/search?type=video&part=snippet&q=" +
           data.a +
-          "&maxResults=21&key=" +
+        "&maxResults=21&key=" +
           process.env.VUE_APP_API_KEY //直す
       )
       .catch((error) => {
         //window.alert("取得に失敗しました。\n" + error);
         console.log(error);
       });
-    this.articles = response.data.items;
-    console.log(response.data.items);
+    this.articles = response.data;
+    console.log(response.data);
   },
   methods: {
     search_video: async function() {
