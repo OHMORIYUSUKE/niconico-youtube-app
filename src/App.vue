@@ -107,8 +107,8 @@ export default {
         //window.alert("取得に失敗しました。\n" + error);
         console.log(error);
       });
-    this.articles = response.data;
-    console.log(response.data);
+    this.articles = response.data.items;
+    console.log(response.data.items);
   },
   methods: {
     search_video: async function() {
@@ -121,7 +121,7 @@ export default {
           "&maxResults=21&key=" +
           process.env.VUE_APP_API_KEY //直す
       );
-      console.log(response.data);
+      console.log(response.data.items);
       this.articles = response.data.items;
     },
   },
