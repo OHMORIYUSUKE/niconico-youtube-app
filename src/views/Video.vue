@@ -51,25 +51,45 @@
               allowfullscreen
             ></iframe>
             <p class="text-h6">{{ videoTitle }}</p>
-            <p>{{ videoDescription }}</p>
+
+            <p>{{ publishTime }} 公開</p>
+
+            <v-divider></v-divider>
+
+            <v-row class="mb-3 mt-3">
+              <v-col sm="1">
+                <v-avatar color="teal" size="48">
+                  <span class="white--text text-h6">{{
+                    channelTitle.substring(0, 2)
+                  }}</span>
+                </v-avatar>
+              </v-col>
+              <v-col sm="11">
+                <p class="mt-2 font-weight-medium channelTitle">
+                  {{ channelTitle }}
+                </p>
+                <p class="mt-1">{{ videoDescription }}</p>
+              </v-col>
+            </v-row>
+            <v-divider></v-divider>
           </v-col>
           <v-col sm="4">
             <div v-for="article in articles" :key="article.id.videoId">
               <v-row>
                 <v-col sm="7">
                   <router-link :to="'/video/' + article.id.videoId">
-                  <figure>
-                    <img
-                      width="100%"
-                      height="115"
-                      :src="
-                        'https://img.youtube.com/vi/' +
-                        article.id.videoId +
-                        '/hqdefault.jpg'
-                      "
-                      @click="$vuetify.goTo(0)"
-                    />
-                  </figure>
+                    <figure>
+                      <img
+                        width="100%"
+                        height="115"
+                        :src="
+                          'https://img.youtube.com/vi/' +
+                          article.id.videoId +
+                          '/hqdefault.jpg'
+                        "
+                        @click="$vuetify.goTo(0)"
+                      />
+                    </figure>
                   </router-link>
                 </v-col>
                 <v-col sm="5">
@@ -107,6 +127,8 @@ export default {
     articles: [],
     videoTitle: String,
     videoDescription: String,
+    channelTitle: String,
+    publishTime: String,
     error: String,
   }),
   components: {
@@ -129,6 +151,19 @@ export default {
     console.log(title.snippet.title); // display title
     this.videoTitle = title.snippet.title;
     this.videoDescription = title.snippet.description;
+    //
+    this.channelTitle = title.snippet.channelTitle;
+
+    // --
+    const D = new Date(title.snippet.publishTime);
+    const y = D.getFullYear();
+    const month = ("00" + D.getMonth() + 1).slice(-2);
+    const d = ("00" + D.getDate()).slice(-2);
+
+    const updatedAt = y + "/" + month + "/" + d;
+
+    // --
+    this.publishTime = updatedAt;
     //
   },
   methods: {
@@ -163,6 +198,18 @@ export default {
       console.log(title.snippet.description);
       this.videoDescription = title.snippet.description;
       //
+      this.channelTitle = title.snippet.channelTitle;
+      //
+      // --
+      const D = new Date(title.snippet.publishTime);
+      const y = D.getFullYear();
+      const month = ("00" + D.getMonth() + 1).slice(-2);
+      const d = ("00" + D.getDate()).slice(-2);
+
+      const updatedAt = y + "/" + month + "/" + d;
+
+      // --
+      this.publishTime = updatedAt;
       this.detectPath(to.path);
     },
   },
@@ -187,24 +234,25 @@ export default {
   text-decoration: none;
   color: black;
 }
-
+.channelTitle {
+  font-size: 18px;
+}
 
 figure {
   margin: 0;
   padding: 0;
-  background: #fff;
+  background: rgb(245, 245, 245);
   overflow: hidden;
 }
-
 
 figure img {
   -webkit-transform: scale(1);
   transform: scale(1);
-  -webkit-transition: .3s ease-in-out;
-  transition: .3s ease-in-out;
+  -webkit-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
 }
 figure:hover img {
-  -webkit-transform: scale(1.2);
-  transform: scale(1.2);
+  -webkit-transform: scale(1.05);
+  transform: scale(1.05);
 }
 </style>
