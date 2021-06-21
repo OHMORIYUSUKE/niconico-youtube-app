@@ -58,6 +58,7 @@
               <v-row>
                 <v-col sm="7">
                   <router-link :to="'/video/' + article.id.videoId">
+                  <figure>
                     <img
                       width="100%"
                       height="115"
@@ -68,6 +69,7 @@
                       "
                       @click="$vuetify.goTo(0)"
                     />
+                  </figure>
                   </router-link>
                 </v-col>
                 <v-col sm="5">
@@ -184,5 +186,25 @@ export default {
 .title {
   text-decoration: none;
   color: black;
+}
+
+
+figure {
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  overflow: hidden;
+}
+
+
+figure img {
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  -webkit-transition: .3s ease-in-out;
+  transition: .3s ease-in-out;
+}
+figure:hover img {
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
 }
 </style>
