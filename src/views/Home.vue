@@ -55,15 +55,17 @@
           <v-col v-for="article in articles" :key="article.id.videoId" sm="4">
             <div class="card" elevation="1">
               <router-link :to="'/video/' + article.id.videoId">
-                <img
-                  width="100%"
-                  height="215"
-                  :src="
-                    'https://img.youtube.com/vi/' +
-                    article.id.videoId +
-                    '/hqdefault.jpg'
-                  "
-                />
+                <figure>
+                  <img
+                    width="100%"
+                    height="215"
+                    :src="
+                      'https://img.youtube.com/vi/' +
+                      article.id.videoId +
+                      '/hqdefault.jpg'
+                    "
+                  />
+                </figure>
               </router-link>
               <p>{{ article.snippet.title }}</p>
             </div>
@@ -148,5 +150,23 @@ export default {
 .title {
   text-decoration: none;
   color: black;
+}
+
+figure {
+  margin: 0;
+  padding: 0;
+  background: rgb(245, 245, 245);
+  overflow: hidden;
+}
+
+figure img {
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  -webkit-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
+}
+figure:hover img {
+  -webkit-transform: scale(1.05);
+  transform: scale(1.05);
 }
 </style>
