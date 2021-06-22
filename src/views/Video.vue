@@ -157,7 +157,7 @@ export default {
     // --
     const D = new Date(title.snippet.publishTime);
     const y = D.getFullYear();
-    const month = ("00" + D.getMonth() + 1).slice(-2);
+    const month = ("00" + (D.getMonth() + 1)).slice(-2);
     const d = ("00" + D.getDate()).slice(-2);
 
     const updatedAt = y + "/" + month + "/" + d;
@@ -203,7 +203,7 @@ export default {
       // --
       const D = new Date(title.snippet.publishTime);
       const y = D.getFullYear();
-      const month = ("00" + D.getMonth() + 1).slice(-2);
+      const month = ("00" + (D.getMonth() + 1)).slice(-2);
       const d = ("00" + D.getDate()).slice(-2);
 
       const updatedAt = y + "/" + month + "/" + d;
