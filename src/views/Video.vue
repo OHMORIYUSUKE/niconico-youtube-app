@@ -43,7 +43,8 @@
               :src="
                 'https://www.youtube.com/embed/' +
                 $route.params.id +
-                '?autoplay=1&mute=0'
+                '?autoplay=1&mute=0&loop=1&playlist=' +
+                vlist
               "
               title="YouTube video player"
               frameborder="0"
@@ -58,7 +59,7 @@
 
             <v-row class="mb-3 mt-3">
               <v-col sm="1">
-                <v-avatar color="teal" size="48">
+                <v-avatar :color="userIconColor" size="48">
                   <span class="white--text text-h6">{{
                     channelTitle.substring(0, 2)
                   }}</span>
@@ -116,6 +117,8 @@ export default {
   name: "Video",
   data: () => ({
     articles: [],
+    vlist: [],
+    userIconColor: String,
     videoTitle: String,
     videoDescription: String,
     channelTitle: String,
@@ -130,6 +133,15 @@ export default {
     // 記事を取得する
     this.articles = JSON.parse(localStorage.getItem("videolist"));
     console.log(JSON.parse(localStorage.getItem("videolist")));
+
+    // 連続再生list生成
+    const videoIds = [];
+    for (let i = 0; i < 100; i++) {
+      videoIds.push(this.$route.params.id);
+    }
+    this.vlist = videoIds;
+    //
+
     //
     const JSONDATA = JSON.parse(localStorage.getItem("videolist"));
     const getFruitById = (id) => {
@@ -156,18 +168,49 @@ export default {
     // --
     this.publishTime = updatedAt;
     //
+    // ユーザーアイコン色
+    const colorlist = [
+      "red",
+      "purple",
+      "green",
+      "teal",
+      "deep-orange",
+      "light-blue",
+    ];
+    const day = D.getDate();
+    if (1 <= day && day <= 5) {
+      this.userIconColor = colorlist[0];
+    } else if (6 <= day && day <= 10) {
+      this.userIconColor = colorlist[1];
+    } else if (11 <= day && day <= 15) {
+      this.userIconColor = colorlist[2];
+    } else if (16 <= day && day <= 20) {
+      this.userIconColor = colorlist[3];
+    } else if (21 <= day && day <= 25) {
+      this.userIconColor = colorlist[4];
+    } else {
+      this.userIconColor = colorlist[5];
+    }
   },
   methods: {
     search_video: function () {
       //console.log('検索！！');
       const ta3 = document.getElementById("searchTextId").value;
       console.log(ta3);
-      this.$router.push('/?q=' + ta3);
+      this.$router.push("/?q=" + ta3);
     },
   },
   watch: {
     $route(to) {
       //遷移先のpathを取得
+      // 連続再生list生成
+      const videoIds = [];
+      for (let i = 0; i < 100; i++) {
+        videoIds.push(this.$route.params.id);
+      }
+      this.vlist = videoIds;
+      //---------------
+
       console.log("watch : " + to.path);
       console.log("watch :" + this.$route.params.id);
       //
@@ -193,6 +236,31 @@ export default {
 
       // --
       this.publishTime = updatedAt;
+
+      // ユーザーアイコン色
+      const colorlist = [
+        "red",
+        "purple",
+        "green",
+        "teal",
+        "deep-orange",
+        "light-blue",
+      ];
+      const day = D.getDate();
+      if (1 <= day && day <= 5) {
+        this.userIconColor = colorlist[0];
+      } else if (6 <= day && day <= 10) {
+        this.userIconColor = colorlist[1];
+      } else if (11 <= day && day <= 15) {
+        this.userIconColor = colorlist[2];
+      } else if (16 <= day && day <= 20) {
+        this.userIconColor = colorlist[3];
+      } else if (21 <= day && day <= 25) {
+        this.userIconColor = colorlist[4];
+      } else {
+        this.userIconColor = colorlist[5];
+      }
+
       this.detectPath(to.path);
     },
   },

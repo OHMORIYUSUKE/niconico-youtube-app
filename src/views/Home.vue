@@ -102,14 +102,14 @@ export default {
     // ?q={}を取得する
     console.log(this.$route.query.q);
     // ?q={}があったら検索ワードを変える
-    if(this.$route.query.q){
+    if (this.$route.query.q) {
       data.a = this.$route.query.q;
     }
     const response = await axios
       .get(
         "https://www.googleapis.com/youtube/v3/search?type=video&part=snippet&q=" +
           data.a +
-          "&maxResults=21&key=" +
+          "&maxResults=21&videoEmbeddable=true&key=" +
           process.env.VUE_APP_API_KEY //直す
       )
       .catch((error) => {
@@ -128,7 +128,7 @@ export default {
       const response = await axios.get(
         "https://www.googleapis.com/youtube/v3/search?type=video&part=snippet&q=" +
           data.a +
-          "&maxResults=21&key=" +
+          "&maxResults=21&videoEmbeddable=true&key=" +
           process.env.VUE_APP_API_KEY //直す
       );
       console.log(response.data.items);
