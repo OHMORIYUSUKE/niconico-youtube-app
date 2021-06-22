@@ -99,6 +99,12 @@ export default {
   async mounted() {
     // 記事を取得する
     console.log("mounted()" + data.a);
+    // ?q={}を取得する
+    console.log(this.$route.query.q);
+    // ?q={}があったら検索ワードを変える
+    if(this.$route.query.q){
+      data.a = this.$route.query.q;
+    }
     const response = await axios
       .get(
         "https://www.googleapis.com/youtube/v3/search?type=video&part=snippet&q=" +

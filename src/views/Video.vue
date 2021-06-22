@@ -20,13 +20,13 @@
       <v-text-field
         class="text"
         id="searchTextId"
+        v-model="searchText"
         hide-details
         single-line
         outlined
-        value="このページの検索機能は実装されていません。"
       ></v-text-field>
 
-      <v-btn depressed>
+      <v-btn depressed v-on:click="search_video()">
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
 
@@ -111,16 +111,7 @@
 
 <script>
 import HelloWorld from "../components/HelloWorld.vue";
-import axios from "axios";
-import Vue from "vue";
 
-// データオブジェクト
-var data = { a: "アイマス" };
-// Vue インスタンスにオブジェクトを追加する
-var vm = new Vue({
-  data: data,
-});
-console.log(data.a);
 export default {
   name: "Video",
   data: () => ({
@@ -167,19 +158,11 @@ export default {
     //
   },
   methods: {
-    search_video: async function () {
+    search_video: function () {
+      //console.log('検索！！');
       const ta3 = document.getElementById("searchTextId").value;
-      vm.a = ta3;
-      console.log(vm.a);
-      const response = await axios.get(
-        "https://www.googleapis.com/youtube/v3/search?type=video&part=snippet&q=" +
-          data.a +
-          "&maxResults=21&key=" +
-          process.env.VUE_APP_API_KE //直す
-      );
-      console.log(response.data.items);
-      localStorage.setItem("videolist", JSON.stringify(response.data.items));
-      this.articles = response.data.items;
+      console.log(ta3);
+      this.$router.push('/?q=' + ta3);
     },
   },
   watch: {
