@@ -11,7 +11,9 @@
       <router-link to="/" class="title">
         <v-toolbar-title
           ><v-icon large="true" color="rgb(255, 19, 19)">mdi-youtube</v-icon>
-          MyTube</v-toolbar-title
+          <span v-show="$vuetify.breakpoint.smAndUp" class="ml-2"
+            >MyTube</span
+          ></v-toolbar-title
         >
       </router-link>
 
@@ -24,6 +26,7 @@
         hide-details
         single-line
         outlined
+        dense
       ></v-text-field>
 
       <v-btn depressed v-on:click="search_video()">
@@ -52,13 +55,23 @@
           </v-col>
         </v-row>
         <v-row no-gutters v-else>
-          <v-col v-for="article in articles" :key="article.id.videoId" sm="4">
-            <div class="card" elevation="1">
-              <router-link :to="'/video/' + article.id.videoId">
+          <v-col
+            v-for="article in articles"
+            :key="article.id.videoId"
+            sm="3"
+            cols="12"
+            md="4"
+            lg="3"
+          >
+            <router-link
+              :to="'/video/' + article.id.videoId"
+              style="text-decoration: none; color: black"
+            >
+              <div class="card" elevation="1">
                 <figure>
                   <img
                     width="100%"
-                    height="215"
+                    height="170"
                     :src="
                       'https://img.youtube.com/vi/' +
                       article.id.videoId +
@@ -66,9 +79,9 @@
                     "
                   />
                 </figure>
-              </router-link>
-              <p>{{ article.snippet.title }}</p>
-            </div>
+                <p>{{ article.snippet.title }}</p>
+              </div>
+            </router-link>
           </v-col>
         </v-row>
       </v-container>
@@ -105,11 +118,12 @@ export default {
     if (this.$route.query.q) {
       data.a = this.$route.query.q;
     }
+    this.$router.push("/?q=" + data.a);
     const response = await axios
       .get(
         "https://www.googleapis.com/youtube/v3/search?type=video&part=snippet&q=" +
           data.a +
-          "&maxResults=21&videoEmbeddable=true&key=" +
+          "&maxResults=24&videoEmbeddable=true&key=" +
           process.env.VUE_APP_API_KEY //直す
       )
       .catch((error) => {
@@ -124,11 +138,12 @@ export default {
     search_video: async function () {
       const ta3 = document.getElementById("searchTextId").value;
       vm.a = ta3;
+      this.$router.push("/?q=" + ta3);
       console.log(vm.a);
       const response = await axios.get(
         "https://www.googleapis.com/youtube/v3/search?type=video&part=snippet&q=" +
           data.a +
-          "&maxResults=21&videoEmbeddable=true&key=" +
+          "&maxResults=24&videoEmbeddable=true&key=" +
           process.env.VUE_APP_API_KEY //直す
       );
       console.log(response.data.items);
@@ -157,14 +172,12 @@ export default {
   text-decoration: none;
   color: black;
 }
-
 figure {
   margin: 0;
   padding: 0;
   background: rgb(245, 245, 245);
   overflow: hidden;
 }
-
 figure img {
   -webkit-transform: scale(1);
   transform: scale(1);

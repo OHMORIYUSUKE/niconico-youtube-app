@@ -11,6 +11,14 @@
         <v-card-text>
           <p>YouTubeもどきです。</p>
           <p>APIのコール数が上限に達すると利用できなくなります。</p>
+          <p>
+            niconico動画バージョンも制作しました。-><a
+              href="https://infallible-kowalevski-8d7b30.netlify.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              >NicoTube</a
+            >
+          </p>
           <a href="https://twitter.com/uutan1108">作った人</a>
         </v-card-text>
 

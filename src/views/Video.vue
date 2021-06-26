@@ -11,7 +11,9 @@
       <router-link to="/" class="title">
         <v-toolbar-title
           ><v-icon large="true" color="rgb(255, 19, 19)">mdi-youtube</v-icon>
-          MyTube</v-toolbar-title
+          <span v-show="$vuetify.breakpoint.smAndUp" class="ml-2"
+            >MyTube</span
+          ></v-toolbar-title
         >
       </router-link>
 
@@ -24,6 +26,7 @@
         hide-details
         single-line
         outlined
+        dense
       ></v-text-field>
 
       <v-btn depressed v-on:click="search_video()">
@@ -36,12 +39,12 @@
     <div class="maincontent">
       <v-container>
         <v-row>
-          <v-col sm="8">
+          <v-col sm="8" cols="12" xs="12">
             <iframe
               width="100%"
-              height="415"
+              :height="$vuetify.breakpoint.smAndDown ? 220 : 415"
               :src="
-                'https://www.youtube.com/embed/' +
+                'https://www.youtube-nocookie.com/embed/' +
                 $route.params.id +
                 '?autoplay=1&mute=0&loop=1&playlist=' +
                 vlist
@@ -57,28 +60,55 @@
 
             <v-divider></v-divider>
 
-            <v-row class="mb-3 mt-3">
-              <v-col sm="1">
-                <v-avatar :color="userIconColor" size="48">
-                  <span class="white--text text-h6">{{
-                    channelTitle.substring(0, 2)
-                  }}</span>
+            <v-row :align="align" no-gutters class="mt-6 mb-0">
+              <v-col cols="1">
+                <v-avatar
+                  :color="userIconColor"
+                  :size="$vuetify.breakpoint.smAndDown ? '40' : '48'"
+                >
+                  <span
+                    :class="
+                      $vuetify.breakpoint.smAndDown
+                        ? 'white--text'
+                        : 'white--text text-h6'
+                    "
+                    >{{ channelTitle.substring(0, 2) }}</span
+                  >
                 </v-avatar>
               </v-col>
-              <v-col sm="11">
-                <p class="mt-2 font-weight-medium channelTitle">
+              <v-col :class="$vuetify.breakpoint.smAndDown ? 'ml-6' : 'ml-1'">
+                <p
+                  :class="
+                    $vuetify.breakpoint.smAndDown
+                      ? 'mt-2'
+                      : 'mt-3 font-weight-medium channelTitle'
+                  "
+                >
                   {{ channelTitle }}
                 </p>
-                <p class="mt-1">{{ videoDescription }}</p>
               </v-col>
             </v-row>
+
+            <v-row class="mt-0 mb-1">
+              <v-col v-show="$vuetify.breakpoint.smAndUp" cols="1"></v-col>
+              <v-col
+                :cols="$vuetify.breakpoint.smAndDown ? '12' : ''"
+                :class="$vuetify.breakpoint.smAndDown ? '' : 'ml-4 pl-0'"
+              >
+                <p class="mt-1 ml-0 pl-0">{{ videoDescription }}</p>
+              </v-col>
+            </v-row>
+
             <v-divider></v-divider>
           </v-col>
           <v-col sm="4">
             <div v-for="article in articles" :key="article.id.videoId">
-              <v-row>
-                <v-col sm="7">
-                  <router-link :to="'/video/' + article.id.videoId">
+              <router-link
+                :to="'/video/' + article.id.videoId"
+                style="text-decoration: none; color: black"
+              >
+                <v-row @click="$vuetify.goTo(0)">
+                  <v-col sm="7">
                     <figure>
                       <img
                         width="100%"
@@ -88,20 +118,19 @@
                           article.id.videoId +
                           '/hqdefault.jpg'
                         "
-                        @click="$vuetify.goTo(0)"
                       />
                     </figure>
-                  </router-link>
-                </v-col>
-                <v-col sm="5">
-                  <p v-if="article.snippet.title.length < 35">
-                    {{ article.snippet.title }}
-                  </p>
-                  <p v-else>
-                    {{ article.snippet.title.substring(0, 35) + "..." }}
-                  </p>
-                </v-col>
-              </v-row>
+                  </v-col>
+                  <v-col sm="5">
+                    <p v-if="article.snippet.title.length < 35">
+                      {{ article.snippet.title }}
+                    </p>
+                    <p v-else>
+                      {{ article.snippet.title.substring(0, 35) + "..." }}
+                    </p>
+                  </v-col>
+                </v-row>
+              </router-link>
             </div>
           </v-col>
         </v-row>
